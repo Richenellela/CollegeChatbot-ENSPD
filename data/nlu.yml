@@ -1,0 +1,360 @@
+version: "3.1"
+
+nlu:
+# ===========================
+#   INTENTS GÉNÉRAUX
+# ===========================
+- intent: greet
+  examples: |
+    - bonjour
+    - salut
+    - hello
+    - hi
+    - hey
+    - good morning
+    - good evening
+    - bonsoir
+    - coucou
+    - bonne journée
+    - cc
+    - yo
+    - salut le bot
+    - bonjour chatbot
+    - greetings
+    - hi there
+    - hey there
+
+- intent: goodbye
+  examples: |
+    - au revoir
+    - bye
+    - goodbye
+    - see you
+    - see you later
+    - à bientôt
+    - salut
+    - ciao
+    - à plus
+    - à plus tard
+    - bonne journée
+    - have a nice day
+    - bonne soirée
+    - merci au revoir
+    - thanks bye
+
+- intent: affirmer
+  examples: |
+    - oui
+    - ouais
+    - exact
+    - exactement
+    - bien sûr
+    - d'accord
+    - ok
+    - okay
+    - c'est ça
+    - affirmatif
+    - correct
+    - parfait
+    - vas-y
+
+- intent: nier
+  examples: |
+    - non
+    - non merci
+    - pas du tout
+    - négatif
+    - nope
+    - nan
+    - jamais
+    - pas vraiment
+
+- intent: remercier
+  examples: |
+    - merci
+    - merci beaucoup
+    - merci bien
+    - thanks
+    - super merci
+    - je te remercie
+    - merci pour l'info
+    - merci pour ton aide
+    - c'est gentil merci
+
+- intent: demander_aide
+  examples: |
+    - aide
+    - aide-moi
+    - help
+    - help me
+    - j'ai besoin d'aide
+    - comment ça marche
+    - how does it work
+    - que peux-tu faire
+    - what can you do
+    - tu peux m'aider
+    - can you help me
+    - comment utiliser ce bot
+    - quelles sont tes fonctionnalités
+    - what are your features
+    - tu fais quoi
+    - comment tu fonctionnes
+    - menu
+    - options
+
+# ===========================
+#   INTENTS INFORMATIONS ENSPD
+# ===========================
+- intent: demander_info_enspd
+  examples: |
+    - parle-moi de l'ENSPD
+    - c'est quoi l'ENSPD
+    - présente-moi l'ENSPD
+    - qu'est-ce que l'ENSPD
+    - infos sur l'ENSPD
+    - je veux connaître l'ENSPD
+    - donne-moi des infos sur l'école
+    - présentation de l'école
+    - historique de l'ENSPD
+    - l'ENSPD c'est quoi
+    - à propos de l'école
+
+- intent: demander_contact
+  examples: |
+    - contact de l'ENSPD
+    - numéro de téléphone de l'école
+    - email ENSPD
+    - comment contacter l'ENSPD
+    - adresse de l'école
+    - où se trouve l'ENSPD
+    - localisation ENSPD
+    - coordonnées de l'école
+    - je veux contacter l'école
+    - téléphone du secrétariat
+
+- intent: demander_horaires
+  examples: |
+    - horaires de l'ENSPD
+    - l'école ouvre à quelle heure
+    - heures d'ouverture
+    - quand ouvre l'école
+    - quand ferme l'ENSPD
+    - horaires des cours
+    - horaires du secrétariat
+    - horaires administratifs
+    - planning de l'école
+
+# ===========================
+#   INTENTS FILIÈRES
+# ===========================
+- intent: demander_liste_filieres
+  examples: |
+    - quelles sont les filières
+    - what are the programs
+    - liste des filières
+    - list of programs
+    - filières disponibles
+    - available programs
+    - départements de l'ENSPD
+    - ENSPD departments
+    - quelles filières à l'ENSPD
+    - what programs at ENSPD
+    - quels sont les départements
+    - options de formation
+    - training options
+    - formations disponibles
+    - programmes à l'ENSPD
+    - programs at ENSPD
+    - quels cursus
+    - what courses
+    - domaines d'études
+    - fields of study
+
+- intent: demander_info_filiere
+  examples: |
+    - infos sur [GI](filiere)
+    - info about [GI](filiere)
+    - tell me about [GI](filiere)
+    - parle-moi de [GI](filiere)
+    - parle-moi de la filière [Génie Civil](filiere)
+    - tell me about [Civil Engineering](filiere)
+    - c'est quoi [GE](filiere)
+    - what is [GE](filiere)
+    - présente-moi [Génie Informatique](filiere)
+    - introduce [Computer Engineering](filiere)
+    - je veux savoir sur [GMP](filiere)
+    - I want to know about [GMP](filiere)
+    - détails sur [Génie des Télécommunications](filiere)
+    - details about [Telecommunications Engineering](filiere)
+    - programme de [GIND](filiere)
+    - program of [GIND](filiere)
+    - [Génie Électrique](filiere) c'est comment
+    - how is [Electrical Engineering](filiere)
+    - en quoi consiste [GT](filiere)
+    - what does [GT](filiere) consist of
+    - description de [GC](filiere)
+    - description of [GC](filiere)
+    - [GI](filiere) ça parle de quoi
+    - what is [GI](filiere) about
+    - frais de [GMP](filiere)
+    - fees for [GMP](filiere)
+    - durée de [GIND](filiere)
+    - duration of [GIND](filiere)
+    - nombre de places en [GE](filiere)
+    - number of seats in [GE](filiere)
+
+- intent: demander_syllabus
+  examples: |
+    - syllabus de [GI](filiere)
+    - programme détaillé de [GC](filiere)
+    - cours de [GE](filiere)
+    - je veux le syllabus de [GMP](filiere)
+    - matières de [GT](filiere)
+    - contenu du programme [GIND](filiere)
+    - donne-moi le syllabus
+    - voir le programme des cours
+    - matières enseignées en [GI](filiere)
+
+# ===========================
+#   INTENTS ADMISSION
+# ===========================
+- intent: demander_admission
+  examples: |
+    - conditions d'admission
+    - admission requirements
+    - admission conditions
+    - comment intégrer l'ENSPD
+    - how to join ENSPD
+    - how to enter ENSPD
+    - critères de sélection
+    - selection criteria
+    - admission à l'ENSPD
+    - admission to ENSPD
+    - comment entrer à l'ENSPD
+    - procédure d'admission
+    - admission procedure
+    - documents pour l'admission
+    - documents for admission
+    - s'inscrire à l'ENSPD
+    - register at ENSPD
+    - devenir étudiant ENSPD
+    - become ENSPD student
+    - qui peut intégrer l'ENSPD
+    - who can join ENSPD
+    - niveau requis pour l'admission
+    - required level for admission
+
+- intent: demander_concours
+  examples: |
+    - concours d'entrée
+    - épreuves du concours
+    - comment préparer le concours
+    - date du concours
+    - résultats du concours
+    - programme du concours
+    - inscription au concours
+    - quand est le concours
+    - matières du concours
+    - coefficient du concours
+    - calendrier du concours
+
+- intent: demander_chances_admission
+  examples: |
+    - j'ai le rang [500](rang) quelles sont mes chances
+    - admission avec rang [200](rang)
+    - mon rang est [1000](rang) puis-je entrer
+    - chances avec [300](rang) au concours
+    - rang [150](rang) pour [GI](filiere)
+    - puis-je être admis avec [800](rang)
+    - j'ai [450](rang) c'est suffisant
+    - chances d'admission rang [600](rang)
+    - rang [100](rang) en [GC](filiere)
+    - évaluation avec [1200](rang)
+
+# ===========================
+#   INTENTS VIE ESTUDIANTINE
+# ===========================
+- intent: demander_info_bourse
+  examples: |
+    - bourses disponibles
+    - comment obtenir une bourse
+    - critères pour la bourse
+    - demande de bourse
+    - montant de la bourse
+    - bourse d'excellence
+    - bourse sociale
+    - aide financière
+    - financement des études
+    - procédure de demande de bourse
+
+- intent: demander_logement
+  examples: |
+    - logement étudiant
+    - cité universitaire
+    - où se loger
+    - résidence ENSPD
+    - hébergement près de l'école
+    - chambres pour étudiants
+    - campus ENSPD
+    - loyer étudiant
+    - résidences privées
+
+- intent: demander_activites
+  examples: |
+    - activités à l'ENSPD
+    - clubs étudiants
+    - activités sportives
+    - associations
+    - vie sur le campus
+    - événements étudiants
+    - quoi faire à l'ENSPD
+    - loisirs à l'école
+
+# ===========================
+#   SYNONYMES FILIÈRES
+# ===========================
+- synonym: GI
+  examples: |
+    - Génie Informatique
+    - genie informatique
+    - informatique
+    - computer engineering
+    - info
+
+- synonym: GC
+  examples: |
+    - Génie Civil
+    - genie civil
+    - civil
+    - BTP
+
+- synonym: GE
+  examples: |
+    - Génie Électrique
+    - genie electrique
+    - électrique
+    - electrique
+    - électrotechnique
+
+- synonym: GMP
+  examples: |
+    - Génie Mécanique et Productique
+    - genie mecanique
+    - mécanique
+    - mecanique
+    - productique
+
+- synonym: GT
+  examples: |
+    - Génie des Télécommunications
+    - genie telecom
+    - télécommunications
+    - telecom
+    - télécoms
+
+- synonym: GIND
+  examples: |
+    - Génie Industriel
+    - genie industriel
+    - industriel
+    - gestion industrielle

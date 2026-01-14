@@ -1,0 +1,350 @@
+version: "3.1"
+
+stories:
+
+# ===========================
+#   CONVERSATIONS DE BASE
+# ===========================
+
+- story: salutation simple
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- story: au revoir
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: conversation complète
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: demander_aide
+  - action: utter_aide
+  - intent: remercier
+  - action: utter_remercier
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: demande aide
+  steps:
+  - intent: demander_aide
+  - action: utter_aide
+
+# ===========================
+#   INFORMATIONS ENSPD
+# ===========================
+
+- story: presentation ENSPD
+  steps:
+  - intent: demander_info_enspd
+  - action: utter_info_enspd
+
+- story: contact ENSPD
+  steps:
+  - intent: demander_contact
+  - action: utter_contact_enspd
+
+- story: horaires ENSPD
+  steps:
+  - intent: demander_horaires
+  - action: utter_horaires
+
+- story: info puis contact
+  steps:
+  - intent: demander_info_enspd
+  - action: utter_info_enspd
+  - intent: demander_contact
+  - action: utter_contact_enspd
+
+# ===========================
+#   PARCOURS FILIÈRES
+# ===========================
+
+- story: liste filieres
+  steps:
+  - intent: demander_liste_filieres
+  - action: action_liste_filieres
+
+- story: info filiere GI
+  steps:
+  - intent: demander_info_filiere
+    entities:
+      - filiere: "GI"
+  - action: action_info_filiere
+
+- story: info filiere GC
+  steps:
+  - intent: demander_info_filiere
+    entities:
+      - filiere: "GC"
+  - action: action_info_filiere
+
+- story: info filiere puis syllabus
+  steps:
+  - intent: demander_info_filiere
+    entities:
+      - filiere: "GI"
+  - action: action_info_filiere
+  - intent: affirmer
+  - action: action_demande_syllabus
+
+- story: syllabus direct
+  steps:
+  - intent: demander_syllabus
+    entities:
+      - filiere: "GI"
+  - action: action_demande_syllabus
+
+- story: syllabus sans filiere
+  steps:
+  - intent: demander_syllabus
+  - action: utter_ask_filiere
+  - intent: demander_info_filiere
+    entities:
+      - filiere: "GC"
+  - action: action_demande_syllabus
+
+- story: liste puis details filiere
+  steps:
+  - intent: demander_liste_filieres
+  - action: action_liste_filieres
+  - intent: demander_info_filiere
+    entities:
+      - filiere: "GE"
+  - action: action_info_filiere
+
+# ===========================
+#   PARCOURS ADMISSION
+# ===========================
+
+- story: admission
+  steps:
+  - intent: demander_admission
+  - action: action_info_generale
+
+- story: concours
+  steps:
+  - intent: demander_concours
+  - action: action_info_generale
+
+- story: admission puis concours
+  steps:
+  - intent: demander_admission
+  - action: action_info_generale
+  - intent: demander_concours
+  - action: action_info_generale
+
+- story: chances admission avec rang
+  steps:
+  - intent: demander_chances_admission
+    entities:
+      - rang: "500"
+  - action: action_chances_admission
+
+- story: chances admission avec rang et filiere
+  steps:
+  - intent: demander_chances_admission
+    entities:
+      - rang: "500"
+      - filiere: "GI"
+  - action: action_chances_admission
+
+- story: concours puis chances
+  steps:
+  - intent: demander_concours
+  - action: action_info_generale
+  - intent: demander_chances_admission
+    entities:
+      - rang: "300"
+  - action: action_chances_admission
+
+# ===========================
+#   PARCOURS VIE ESTUDIANTINE
+# ===========================
+
+- story: bourses
+  steps:
+  - intent: demander_info_bourse
+  - action: action_info_generale
+
+- story: logement
+  steps:
+  - intent: demander_logement
+  - action: action_info_generale
+
+- story: activites
+  steps:
+  - intent: demander_activites
+  - action: action_info_generale
+
+- story: bourses puis logement
+  steps:
+  - intent: demander_info_bourse
+  - action: action_info_generale
+  - intent: demander_logement
+  - action: action_info_generale
+
+# ===========================
+#   PARCOURS COMPLETS
+# ===========================
+
+- story: parcours candidat complet
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: demander_liste_filieres
+  - action: action_liste_filieres
+  - intent: demander_info_filiere
+    entities:
+      - filiere: "GI"
+  - action: action_info_filiere
+  - intent: demander_admission
+  - action: action_info_generale
+  - intent: demander_concours
+  - action: action_info_generale
+  - intent: remercier
+  - action: utter_remercier
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: parcours evaluation admission
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: demander_concours
+  - action: action_info_generale
+  - intent: demander_chances_admission
+    entities:
+      - rang: "450"
+      - filiere: "GI"
+  - action: action_chances_admission
+  - intent: demander_info_filiere
+    entities:
+      - filiere: "GI"
+  - action: action_info_filiere
+  - intent: remercier
+  - action: utter_remercier
+
+- story: parcours vie estudiantine
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: demander_info_bourse
+  - action: action_info_generale
+  - intent: demander_logement
+  - action: action_info_generale
+  - intent: demander_activites
+  - action: action_info_generale
+  - intent: remercier
+  - action: utter_remercier
+
+# ===========================
+#   GESTION ERREURS
+# ===========================
+
+- story: incomprehension
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default
+
+- story: incomprehension puis aide
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default
+  - intent: demander_aide
+  - action: utter_aide
+
+intents:
+  - greet
+  - goodbye
+  - demander_aide
+  - remercier
+  - demander_info_enspd
+  - demander_contact
+  - demander_horaires
+  - demander_liste_filieres
+  - demander_info_filiere
+  - demander_admission
+  - demander_concours
+  - demander_chances_admission
+  - demander_info_bourse
+  - demander_logement
+  - demander_activites
+  - affirmer
+  - nlu_fallback
+
+actions:
+  - utter_greet
+  - utter_goodbye
+  - utter_aide
+  - utter_remercier
+  - utter_info_enspd
+  - utter_contact_enspd
+  - utter_horaires
+  - action_liste_filieres
+  - action_info_filiere
+  - action_info_generale
+  - action_chances_admission
+  - action_demande_syllabus
+  - utter_ask_filiere
+  - utter_default
+
+templates:
+  utter_greet:
+  - text: "Bonjour ! Comment puis-je vous aider ?"
+  - text: "Salut ! En quoi puis-je vous être utile ?"
+
+  utter_goodbye:
+  - text: "Au revoir ! À bientôt."
+  - text: "Bonne journée !"
+
+  utter_aide:
+  - text: "Je suis là pour vous aider. Que puis-je faire pour vous ?"
+  - text: "N'hésitez pas à me dire comment je peux vous assister."
+
+  utter_remercier:
+  - text: "Je vous en prie. Si vous avez d'autres questions, n'hésitez pas."
+  - text: "Avec plaisir ! Je suis là pour ça."
+
+  utter_info_enspd:
+  - text: "L'ENSPD est l'École Nationale Supérieure de Physique de Dakar. Elle forme des ingénieurs en physique appliquée."
+  - text: "L'ENSPD propose des formations en physique, en informatique et en électronique."
+
+  utter_contact_enspd:
+  - text: "Vous pouvez contacter l'ENSPD par email à contact@enspd.sn ou par téléphone au 77 123 45 67."
+  - text: "Les coordonnées de l'ENSPD sont : Email - contact@enspd.sn, Téléphone - 77 123 45 67."
+
+  utter_horaires:
+  - text: "Les cours à l'ENSPD commencent à 8h00 et se terminent à 17h00 du lundi au vendredi."
+  - text: "Les horaires des cours sont de 8h00 à 17h00, avec une pause déjeuner de 12h30 à 13h30."
+
+  action_liste_filieres:
+  - text: "Les filières proposées sont : Génie Informatique (GI), Génie Civil (GC), Génie Electrique (GE)."
+  - text: "Nous avons les filières suivantes : GI, GC, GE."
+
+  action_info_filiere:
+  - text: "La filière Génie Informatique (GI) forme des experts en développement logiciel, bases de données, et systèmes informatiques."
+  - text: "La filière Génie Civil (GC) prépare aux métiers du bâtiment, des travaux publics, et de l'urbanisme."
+  - text: "La filière Génie Electrique (GE) concerne l'étude et la conception des systèmes électriques."
+
+  action_info_generale:
+  - text: "Pour l'admission, il faut un baccalauréat scientifique et réussir le concours d'entrée."
+  - text: "Les conditions d'admission incluent un diplôme de baccalauréat et la réussite au concours."
+
+  action_chances_admission:
+  - text: "Avec un rang de {rang}, vos chances d'admission sont {chances}."
+  - text: "Un rang de {rang} vous donne environ {chances} chances d'être admis."
+
+  action_demande_syllabus:
+  - text: "Voici le syllabus de la filière demandée."
+  - text: "Le syllabus est envoyé par email. Veuillez vérifier votre boîte de réception."
+
+  utter_ask_filiere:
+  - text: "Pour quel domaine souhaitez-vous le syllabus ?"
+  - text: "Veuillez préciser la filière pour laquelle vous voulez le syllabus."
+
+  utter_default:
+  - text: "Je suis désolé, je n'ai pas compris votre demande."
+  - text: "Pouvez-vous reformuler votre question, s'il vous plaît ?"

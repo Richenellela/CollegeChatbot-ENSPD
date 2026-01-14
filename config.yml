@@ -1,0 +1,75 @@
+# Configuration RASA pour OUNIBOT
+# Support Français ET Anglais
+
+recipe: default.v1
+
+assistant_id: ounibot-enspd-2024
+
+# IMPORTANT: Support multilingue
+language: fr  # Langue principale: français
+
+pipeline:
+  # Tokenization adaptée au français ET anglais
+  - name: WhitespaceTokenizer
+  
+  # Features avec regex
+  - name: RegexFeaturizer
+  
+  # Features lexicales et syntaxiques
+  - name: LexicalSyntacticFeaturizer
+  
+  # Vectorisation des mots
+  - name: CountVectorsFeaturizer
+    analyzer: word
+    min_ngram: 1
+    max_ngram: 2
+  
+  # Vectorisation des caractères (meilleur pour le multilingue)
+  - name: CountVectorsFeaturizer
+    analyzer: char_wb
+    min_ngram: 1
+    max_ngram: 4
+  
+  # Classificateur principal avec entity recognition
+  - name: DIETClassifier
+    epochs: 150  # Augmenté pour meilleure précision
+    entity_recognition: True
+    constrain_similarities: True
+    model_confidence: softmax
+  
+  # Mapping des synonymes
+  - name: EntitySynonymMapper
+  
+  # Sélecteur de réponses
+  - name: ResponseSelector
+    epochs: 150
+  
+  # Classificateur de fallback
+  - name: FallbackClassifier
+    threshold: 0.4  # Ajusté pour accepter anglais/français
+    ambiguity_threshold: 0.1
+
+# Configuration des politiques de dialogue
+policies:
+  # Mémorisation des conversations
+  - name: MemoizationPolicy
+    max_history: 5
+  
+  # Règles de dialogue
+  - name: RulePolicy
+    core_fallback_threshold: 0.4
+    core_fallback_action_name: "action_default_fallback"
+    enable_fallback_prediction: True
+  
+  # Politique pour gérer les intents inattendus
+  - name: UnexpecTEDIntentPolicy
+    max_history: 5
+    epochs: 150
+  
+  # Politique principale de dialogue
+  - name: TEDPolicy
+    max_history: 5
+    epochs: 150
+    constrain_similarities: True
+    model_confidence: softmax
+

@@ -1,0 +1,65 @@
+version: "3.1"
+
+rules:
+
+# ===========================
+#   RÈGLES DE BASE
+# ===========================
+
+- rule: Saluer toujours
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Dire au revoir toujours
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Remercier
+  steps:
+  - intent: remercier
+  - action: utter_remercier
+
+- rule: Aide
+  steps:
+  - intent: demander_aide
+  - action: utter_aide
+
+# ===========================
+#   RÈGLES INFORMATIONS FIXES
+# ===========================
+
+- rule: Info ENSPD
+  steps:
+  - intent: demander_info_enspd
+  - action: utter_info_enspd
+
+- rule: Contact ENSPD
+  steps:
+  - intent: demander_contact
+  - action: utter_contact_enspd
+
+- rule: Horaires ENSPD
+  steps:
+  - intent: demander_horaires
+  - action: utter_horaires
+
+# ===========================
+#   RÈGLES FALLBACK
+# ===========================
+
+- rule: Fallback NLU
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default
+
+- rule: Fallback action
+  steps:
+  - action: action_default_fallback
+
+- rule: Handle demande correction etat civil
+  steps:
+  - intent: demander_correction_etat_civil
+  - action: utter_ask_matricule
+  - action: action_demande_correction_etat_civil

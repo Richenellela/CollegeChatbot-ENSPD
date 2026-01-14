@@ -1,0 +1,378 @@
+version: "3.1"
+
+intents:
+  # Intents généraux
+  - greet
+  - goodbye
+  - affirmer
+  - nier
+  - remercier
+  - demander_aide
+  
+  # Intents CDC: Consultation Notes (CU-02)
+  - consulter_toutes_notes
+  - consulter_note_specifique
+  - demander_moyenne
+  - consulter_credits
+  
+  # Intents CDC: Emploi du Temps (CU-03)
+  - consulter_emploi_temps_complet
+  - consulter_prochain_cours
+  - consulter_cours_jour
+  - demander_info_cours
+  
+  # Intents CDC: Demandes de Correction (CU-04)
+  - demander_correction_note
+  - demander_correction_etat_civil
+  - consulter_statut_demande
+  - consulter_historique_demandes
+  
+  # Intents: Informations ENSPD
+  - demander_info_enspd
+  - demander_contact
+  - demander_horaires
+  - demander_liste_filieres
+  - demander_info_filiere
+  
+  # Intents: Admission et Concours
+  - demander_admission
+  - demander_concours
+  - demander_procedure_inscription
+  
+  # Intents: Vie Estudiantine
+  - demander_info_bourse
+  - demander_logement
+  - demander_syllabus
+  - demander_chances_admission
+  - demander_activites
+
+entities:
+  - matricule
+  - matiere
+  - jour
+  - type_correction
+  - filiere
+  - niveau
+  - semestre
+
+slots:
+  matricule:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: matricule
+  
+  user_authenticated:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: custom
+  
+  user_name:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+  
+  matiere:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: matiere
+  
+  jour:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: jour
+
+  filiere:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: filiere
+
+actions:
+  # Actions Backend API
+  - action_consulter_notes
+  - action_consulter_moyenne
+  - action_emploi_temps
+  - action_prochain_cours
+  - action_cours_jour
+  - action_demande_correction_note
+  - action_demande_correction_etat_civil
+  - action_statut_demandes
+  - action_info_filiere
+  - action_info_admission
+  - action_default_fallback
+  - action_liste_filieres
+  - action_demande_syllabus
+  - action_info_generale
+  - action_chances_admission
+
+responses:
+  utter_greet:
+  - text: "Bonjour ! Je suis le bot de l'ENSPD. Comment puis-je vous aider ?"
+
+  utter_greet_not_authenticated:
+  - text: "Bonjour ! 👋 Je suis OUNIBOT, l'assistant virtuel de l'ENSPD. Pour accéder à vos informations personnelles, veuillez vous connecter. Puis-je vous renseigner sur l'école ?"
+
+  utter_goodbye:
+  - text: "Au revoir {user_name} ! N'hésitez pas à revenir si vous avez d'autres questions. Bonne journée ! 👋"
+  - text: "À bientôt {user_name} ! Bonne continuation dans vos études à l'ENSPD. 📚"
+  - text: "Merci de m'avoir consulté. À la prochaine ! 😊"
+
+  utter_default:
+  - text: "Désolé, je n'ai pas compris. Peux-tu reformuler ?"
+  - text: "Je n'ai pas saisi. Essayez de poser votre question différemment ou tapez 'aide' pour voir mes fonctionnalités."
+
+  utter_remercier:
+  - text: "Avec plaisir {user_name} ! C'est mon rôle de vous aider. 😊"
+  - text: "Je vous en prie ! N'hésitez pas pour d'autres questions."
+  - text: "Ravi d'avoir pu vous aider ! 🎓"
+
+  utter_need_authentication:
+  - text: "⚠️ Pour accéder à cette information, vous devez être connecté. Veuillez vous connecter via l'interface web."
+
+  utter_aide:
+  - text: |
+      🤖 **Que puis-je faire pour vous ?**
+      
+      📊 **Notes & Résultats**
+      • "Donne-moi mes notes"
+      • "Quelle est ma moyenne ?"
+      • "Mes crédits validés"
+      
+      📅 **Emploi du Temps**
+      • "Mon emploi du temps"
+      • "Quel est mon prochain cours ?"
+      • "Cours d'aujourd'hui"
+      
+      📝 **Demandes de Correction**
+      • "Comment corriger une note ?"
+      • "Modifier mon état civil"
+      • "Statut de ma demande"
+      
+      ℹ️ **Infos ENSPD**
+      • "Présentation de l'ENSPD"
+      • "Contact de l'école"
+      • "Filières disponibles"
+      
+      🎓 **Admission**
+      • "Conditions d'admission"
+      • "Concours d'entrée"
+      • "Procédure d'inscription"
+
+  # ===========================
+  #   RÉPONSES INFORMATIONS ENSPD
+  # ===========================
+
+  utter_info_enspd:
+  - text: |
+      🏫 **École Nationale Supérieure Polytechnique de Douala (ENSPD)**
+      
+      L'ENSPD est une grande école d'ingénieurs camerounaise créée en 2008. Elle forme des ingénieurs de conception hautement qualifiés dans 6 filières d'excellence.
+      
+      🎯 **Mission**: Former des ingénieurs capables de relever les défis technologiques du Cameroun et de l'Afrique.
+      
+      Souhaitez-vous en savoir plus sur les filières ou les conditions d'admission ?
+
+  utter_contact_enspd:
+  - text: |
+      📍 **Contact ENSPD**
+      
+      **Adresse**: PK17, Route de Bonabéri, Douala, Cameroun
+      📞 **Téléphone**: +237 233 40 XX XX
+      📧 **Email**: contact@enspd.cm
+      🌐 **Site web**: www.enspd.cm
+      
+      **Horaires d'ouverture**:
+      🕐 Lundi-Vendredi: 7h30 - 17h00
+      🕐 Secrétariat: 8h00 - 16h00
+
+  utter_liste_filieres:
+  - text: |
+      🎓 **Filières de l'ENSPD**
+      
+      1️⃣ **Génie Informatique (GI)** - Développement logiciel, réseaux, systèmes
+      2️⃣ **Génie Civil (GC)** - Construction, BTP, infrastructures
+      3️⃣ **Génie Électrique (GE)** - Électrotechnique, systèmes électriques
+      4️⃣ **Génie Mécanique et Productique (GMP)** - Mécanique, production
+      5️⃣ **Génie des Télécommunications (GT)** - Télécoms, réseaux
+      6️⃣ **Génie Industriel (GIND)** - Gestion production, logistique
+      
+      Pour plus d'infos sur une filière, demandez: "Parle-moi de GI"
+
+  utter_admission:
+  - text: |
+      📋 **Conditions d'Admission à l'ENSPD**
+      
+      **Niveau L1 (Licence 1):**
+      • Baccalauréat séries C, D ou E
+      • Réussite au concours d'entrée
+      • Bonne moyenne générale au Bac (12/20 minimum recommandé)
+      
+      **Niveau M1 (Master 1):**
+      • DUT/BTS technique
+      • Licence scientifique
+      • Dossier académique solide
+      
+      **Documents requis:**
+      ✅ Acte de naissance
+      ✅ Diplôme du Baccalauréat
+      ✅ Relevé de notes
+      ✅ Photos d'identité (4)
+      ✅ Certificat médical
+      
+      Voulez-vous en savoir plus sur le concours ?
+
+  utter_concours:
+  - text: |
+      📝 **Concours d'Entrée ENSPD**
+      
+      **Épreuves:**
+      • **Mathématiques** (Coefficient 4) - 3h
+      • **Physique** (Coefficient 3) - 2h30
+      • **Culture Générale** (Coefficient 2) - 2h
+      
+      **Calendrier:**
+      📅 Inscriptions: Juin - Août
+      📅 Concours écrit: Septembre
+      📅 Résultats: Octobre
+      📅 Rentrée: Début Septembre (année suivante)
+      
+      **Préparation:**
+      • Programme niveau Terminale C/D
+      • Annales disponibles au secrétariat
+      • Sessions de préparation proposées
+      
+      💡 **Conseil**: Les meilleurs rangs (1-200) ont d'excellentes chances d'admission.
+
+  utter_procedure_inscription:
+  - text: |
+      📋 **Procédure d'Inscription Administrative**
+      
+      **Étape 1: Inscription en ligne**
+      • Créer un compte sur le portail ENSPD
+      • Remplir le formulaire d'inscription
+      • Télécharger les documents scannés
+      
+      **Étape 2: Paiement des frais**
+      💰 Frais d'inscription: 50 000 FCFA
+      💰 Scolarité annuelle: Variable selon filière (environ 350 000 FCFA)
+      
+      **Étape 3: Validation**
+      • Se présenter au secrétariat avec originaux
+      • Retrait de la carte d'étudiant
+      • Inscription aux cours
+      
+      **Délai**: 2 semaines après réception du dossier complet
+
+  utter_bourse:
+  - text: |
+      💰 **Bourses à l'ENSPD**
+      
+      **Bourse d'Excellence:**
+      • Réservée aux 5% meilleurs étudiants
+      • Montant: 300 000 - 500 000 FCFA/an
+      • Critères: Moyenne ≥ 14/20
+      
+      **Bourse Sociale:**
+      • Pour étudiants en difficulté financière
+      • Montant: 200 000 - 300 000 FCFA/an
+      • Sur dossier social
+      
+      **Procédure:**
+      1. Formulaire de demande au service des affaires estudiantines
+      2. Pièces justificatives
+      3. Délai de traitement: 1 mois
+      
+      📞 Contact: bourses@enspd.cm
+
+  utter_logement:
+  - text: |
+      🏠 **Logement Étudiant**
+      
+      **Cité Universitaire ENSPD:**
+      • Chambres individuelles et partagées
+      • Coût: 40 000 - 60 000 FCFA/mois
+      • Demande au service des affaires estudiantines
+      
+      **Résidences privées à proximité:**
+      • Quartiers: Bonabéri, Ndokoti
+      • Prix: 25 000 - 80 000 FCFA/mois
+      • Liste disponible au secrétariat
+      
+      **Conseils:**
+      ✅ Réserver tôt (places limitées à la cité)
+      ✅ Visiter avant de louer
+      ✅ Privilégier proximité des transports
+
+  # ===========================
+  #   RÉPONSES CORRECTION
+  # ===========================
+
+  utter_procedure_correction_note:
+  - text: |
+      📋 **Procédure de Correction de Note**
+      
+      **Étapes:**
+      1️⃣ Vérifiez votre note contestée
+      2️⃣ Remplissez le formulaire via le dashboard
+      3️⃣ Joignez vos justificatifs (copie d'examen si possible)
+      4️⃣ Payez les frais de traitement: 5 000 FCFA
+      5️⃣ Suivez le statut de votre demande
+      
+      **Délai de traitement:** 7-10 jours ouvrables
+      
+      **Motifs valables:**
+      • Erreur de saisie
+      • Note manquante
+      • Incohérence avec la copie
+      
+      Voulez-vous que je vous aide à créer une demande ?
+
+  utter_procedure_correction_etat_civil:
+  - text: |
+      📋 **Correction d'État Civil**
+      
+      **Informations modifiables:**
+      • Nom de famille
+      • Prénom(s)
+      • Date de naissance
+      
+      **Procédure:**
+      1️⃣ Dashboard → Demandes → Correction État Civil
+      2️⃣ Indiquez le champ à modifier
+      3️⃣ Joignez  une photo acte de naissance 
+      4️⃣ Lettre explicative
+      
+      **Délai:** 15-30 jours
+      **Frais:** Gratuit
+
+  utter_horaires:
+  - text: |
+      🕐 **Horaires des cours ENSPD**
+      • Lundi - Vendredi: 7h30 - 17h00
+      • Pause déjeuner: 12h30 - 13h30
+      • Certains cours peuvent avoir des horaires spécifiques selon la filière.
+      Souhaitez-vous consulter les horaires d'une filière en particulier ?
+
+
+  utter_ask_matiere:
+  - text: "Pour quelle matière souhaitez-vous faire une demande de correction ?"
+
+  utter_ask_motif:
+  - text: "Veuillez expliquer brièvement le motif de votre demande de correction."
+
+  utter_ask_filiere:
+  - text: "Quelle filière souhaitez‑vous consulter ? (ex : Génie Informatique, Génie Civil, Génie Électrique)"
+
+  utter_ask_matricule:
+  - text: "Quel est votre numéro de matricule ?"
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
